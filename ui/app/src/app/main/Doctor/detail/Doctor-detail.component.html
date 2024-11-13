@@ -1,0 +1,91 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="first_name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Doctor_form_edit" 
+        service="Doctor" 
+        entity="Doctor" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #first_name attr="first_name" label=" first_name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #last_name attr="last_name" label="last_name" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #specialization attr="specialization" label="specialization" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="APPOINTMENT-doctor_id">
+    <div layout-padding>
+      <o-table 
+        attr="AppointmentTable" 
+        service="Appointment" 
+        entity="Appointment" 
+        keys="id"
+        parent-keys="doctor_id:id"
+        columns="id;doctor_id;patient_id;appointment_date;reason"  
+        horizontal-scroll="yes"
+        detail-form-route="Appointment" 
+        edit-form-route="Appointment"
+        visible-columns="id;doctor_id;patient_id;appointment_date;reason"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="doctor_id" title="doctor_id">
+    <o-table-cell-renderer-service attr="doctor_id" 
+        service="Doctor" entity="DoctorType" columns="id;first_name"
+        parent-keys="id:doctor_id"
+        value-column="first_name" keys="doctor_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="patient_id" title="patient_id">
+    <o-table-cell-renderer-service attr="patient_id" 
+        service="Patient" entity="PatientType" columns="id;first_name"
+        parent-keys="id:patient_id"
+        value-column="first_name" keys="patient_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #appointment_date attr="appointment_date" type="timestamp" label="appointment_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #reason attr="reason" title="reason" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

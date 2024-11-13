@@ -1,0 +1,316 @@
+about:
+  date: November 13, 2024 15:11:24
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 6
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Appointment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: doctor_id
+      required: true
+    - name: patient_id
+      required: true
+    - name: appointment_date
+      required: true
+      type: DATETIME
+    - name: reason
+    description: Table for storing appointment details including doctor and patient
+      associations.
+    info_list: Table for storing appointment details including doctor and patient
+      associations.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - appointment_id
+      name: InvoiceList
+      resource: Invoice
+    - direction: tomany
+      fks:
+      - appointment_id
+      name: PrescriptionList
+      resource: Prescription
+    - direction: toone
+      fks:
+      - doctor_id
+      name: doctor
+      resource: Doctor
+    - direction: toone
+      fks:
+      - patient_id
+      name: patient
+      resource: Patient
+    type: Appointment
+    user_key: id
+  ClinicStaff:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: position
+      required: true
+    - name: id
+    description: Table for storing clinic staff information.
+    info_list: Table for storing clinic staff information.
+    type: ClinicStaff
+    user_key: first_name
+  Doctor:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: specialization
+      required: true
+    - name: id
+    description: Table for storing doctor information in the clinic.
+    info_list: Table for storing doctor information in the clinic.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - doctor_id
+      name: AppointmentList
+      resource: Appointment
+    type: Doctor
+    user_key: first_name
+  Equipment:
+    attributes:
+    - label: ' equipment_name*'
+      name: equipment_name
+      required: true
+      search: true
+      sort: true
+    - name: equipment_type
+      required: true
+    - name: purchase_date
+      required: true
+      type: DATETIME
+    - name: id
+    description: Table for storing clinic equipment information.
+    info_list: Table for storing clinic equipment information.
+    type: Equipment
+    user_key: equipment_name
+  Inventory:
+    attributes:
+    - label: ' item_name*'
+      name: item_name
+      required: true
+      search: true
+      sort: true
+    - name: quantity
+      required: true
+    - name: id
+    description: Table for managing inventory items in the clinic.
+    info_list: Table for managing inventory items in the clinic.
+    type: Inventory
+    user_key: item_name
+  Invoice:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: appointment_id
+      required: true
+    - name: total_amount
+      required: true
+    - name: paid_amount
+      required: true
+    - name: due_date
+      required: true
+      type: DATETIME
+    description: Table for storing invoice information related to appointments.
+    info_list: Table for storing invoice information related to appointments.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - invoice_id
+      name: PaymentList
+      resource: Payment
+    - direction: toone
+      fks:
+      - appointment_id
+      name: appointment
+      resource: Appointment
+    type: Invoice
+    user_key: id
+  MedicalRecord:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: patient_id
+      required: true
+    - name: record_date
+      required: true
+      type: DATETIME
+    - name: diagnosis
+    - name: treatment
+    description: Table for storing medical records associated with a patient.
+    info_list: Table for storing medical records associated with a patient.
+    tab_groups:
+    - direction: toone
+      fks:
+      - patient_id
+      name: patient
+      resource: Patient
+    type: MedicalRecord
+    user_key: id
+  Patient:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: dob
+      required: true
+      type: DATE
+    - name: gender
+      required: true
+    - name: phone_number
+    - name: id
+    description: Table for storing patient information in the clinic.
+    info_list: Table for storing patient information in the clinic.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - patient_id
+      name: AppointmentList
+      resource: Appointment
+    - direction: tomany
+      fks:
+      - patient_id
+      name: MedicalRecordList
+      resource: MedicalRecord
+    type: Patient
+    user_key: first_name
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: invoice_id
+      required: true
+    - name: payment_date
+      required: true
+      type: DATETIME
+    - name: amount
+      required: true
+    - name: method
+      required: true
+    description: Table for recording payments for invoices.
+    info_list: Table for recording payments for invoices.
+    tab_groups:
+    - direction: toone
+      fks:
+      - invoice_id
+      name: invoice
+      resource: Invoice
+    type: Payment
+    user_key: id
+  Prescription:
+    attributes:
+    - label: ' medication_name*'
+      name: medication_name
+      required: true
+      search: true
+      sort: true
+    - name: appointment_id
+      required: true
+    - name: dosage
+      required: true
+    - name: start_date
+      required: true
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+    description: Table for storing prescriptions linked to appointments.
+    info_list: Table for storing prescriptions linked to appointments.
+    tab_groups:
+    - direction: toone
+      fks:
+      - appointment_id
+      name: appointment
+      resource: Appointment
+    type: Prescription
+    user_key: medication_name
+  Room:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: room_number
+      required: true
+    - name: room_type
+      required: true
+    description: Table for storing information about rooms available in the clinic.
+    info_list: Table for storing information about rooms available in the clinic.
+    type: Room
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' supplier_name*'
+      name: supplier_name
+      required: true
+      search: true
+      sort: true
+    - name: contact_number
+    - name: address
+    - name: id
+    description: Table for storing supplier information associated with clinic consumables.
+    info_list: Table for storing supplier information associated with clinic consumables.
+    type: Supplier
+    user_key: supplier_name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

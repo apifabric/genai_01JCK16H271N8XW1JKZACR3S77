@@ -1,0 +1,510 @@
+about:
+  date: November 13, 2024 15:11:24
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Appointment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: doctor_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: patient_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: appointment_date
+      required: true
+      type: DATETIME
+    - name: reason
+      template: text
+      type: VARCHAR
+    description: Table for storing appointment details including doctor and patient
+      associations.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing appointment details including doctor and patient
+      associations.
+    label: Appointment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - appointment_id
+      name: InvoiceList
+      resource: Invoice
+    - direction: tomany
+      fks:
+      - appointment_id
+      name: PrescriptionList
+      resource: Prescription
+    - direction: toone
+      fks:
+      - doctor_id
+      name: doctor
+      resource: Doctor
+    - direction: toone
+      fks:
+      - patient_id
+      name: patient
+      resource: Patient
+    type: Appointment
+  ClinicStaff:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: position
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing clinic staff information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing clinic staff information.
+    label: ClinicStaff
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: ClinicStaff
+  Doctor:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: specialization
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing doctor information in the clinic.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing doctor information in the clinic.
+    label: Doctor
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - doctor_id
+      name: AppointmentList
+      resource: Appointment
+    type: Doctor
+  Equipment:
+    columns:
+    - label: ' equipment_name*'
+      name: equipment_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: equipment_type
+      required: true
+      template: text
+      type: VARCHAR
+    - name: purchase_date
+      required: true
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing clinic equipment information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: equipment_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing clinic equipment information.
+    label: Equipment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Equipment
+  Inventory:
+    columns:
+    - label: ' item_name*'
+      name: item_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for managing inventory items in the clinic.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: item_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for managing inventory items in the clinic.
+    label: Inventory
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Inventory
+  Invoice:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: appointment_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: total_amount
+      required: true
+      template: integer
+      type: INTEGER
+    - name: paid_amount
+      required: true
+      template: integer
+      type: INTEGER
+    - name: due_date
+      required: true
+      type: DATETIME
+    description: Table for storing invoice information related to appointments.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing invoice information related to appointments.
+    label: Invoice
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - invoice_id
+      name: PaymentList
+      resource: Payment
+    - direction: toone
+      fks:
+      - appointment_id
+      name: appointment
+      resource: Appointment
+    type: Invoice
+  MedicalRecord:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: patient_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: record_date
+      required: true
+      type: DATETIME
+    - name: diagnosis
+      template: text
+      type: VARCHAR
+    - name: treatment
+      template: text
+      type: VARCHAR
+    description: Table for storing medical records associated with a patient.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing medical records associated with a patient.
+    label: MedicalRecord
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - patient_id
+      name: patient
+      resource: Patient
+    type: MedicalRecord
+  Patient:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: dob
+      required: true
+      type: DATE
+    - name: gender
+      required: true
+      template: text
+      type: VARCHAR(1)
+    - name: phone_number
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing patient information in the clinic.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing patient information in the clinic.
+    label: Patient
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - patient_id
+      name: AppointmentList
+      resource: Appointment
+    - direction: tomany
+      fks:
+      - patient_id
+      name: MedicalRecordList
+      resource: MedicalRecord
+    type: Patient
+  Payment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: invoice_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: payment_date
+      required: true
+      type: DATETIME
+    - name: amount
+      required: true
+      template: integer
+      type: INTEGER
+    - name: method
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table for recording payments for invoices.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for recording payments for invoices.
+    label: Payment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - invoice_id
+      name: invoice
+      resource: Invoice
+    type: Payment
+  Prescription:
+    columns:
+    - label: ' medication_name*'
+      name: medication_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: appointment_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: dosage
+      required: true
+      template: text
+      type: VARCHAR
+    - name: start_date
+      required: true
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing prescriptions linked to appointments.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: medication_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing prescriptions linked to appointments.
+    label: Prescription
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - appointment_id
+      name: appointment
+      resource: Appointment
+    type: Prescription
+  Room:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: room_number
+      required: true
+      template: text
+      type: VARCHAR
+    - name: room_type
+      required: true
+      template: text
+      type: VARCHAR
+    description: Table for storing information about rooms available in the clinic.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing information about rooms available in the clinic.
+    label: Room
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Room
+  Supplier:
+    columns:
+    - label: ' supplier_name*'
+      name: supplier_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: contact_number
+      template: text
+      type: VARCHAR
+    - name: address
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing supplier information associated with clinic consumables.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: supplier_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Table for storing supplier information associated with clinic consumables.
+    label: Supplier
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Supplier
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

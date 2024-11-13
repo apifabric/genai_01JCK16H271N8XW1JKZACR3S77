@@ -1,0 +1,37 @@
+<o-form-layout-manager attr="Equipment" mode="dialog" title="EQUIPMENT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="EquipmentTable" 
+            service="Equipment" 
+            entity="Equipment" 
+            title="EQUIPMENT"
+            keys="id"
+            columns="equipment_name;equipment_type;purchase_date;id" 
+            header-actions="R;D"
+            visible-columns="equipment_name;equipment_type;purchase_date;id"  
+            sort-columns="equipment_name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #equipment_name attr="equipment_name" title=" equipment_name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #equipment_type attr="equipment_type" title="equipment_type" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-date-input #purchase_date attr="purchase_date" type="timestamp" label="purchase_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

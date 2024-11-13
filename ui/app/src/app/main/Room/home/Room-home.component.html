@@ -1,0 +1,35 @@
+<o-form-layout-manager attr="Room" mode="dialog" title="ROOM">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="RoomTable" 
+            service="Room" 
+            entity="Room" 
+            title="ROOM"
+            keys="id"
+            columns="id;room_number;room_type" 
+            header-actions="R;D"
+            visible-columns="id;room_number;room_type"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #room_number attr="room_number" title="room_number" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #room_type attr="room_type" title="room_type" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

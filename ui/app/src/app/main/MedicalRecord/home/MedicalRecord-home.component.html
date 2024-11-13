@@ -1,0 +1,46 @@
+<o-form-layout-manager attr="MedicalRecord" mode="tab" title="MEDICALRECORD">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="MedicalRecordTable" 
+            service="MedicalRecord" 
+            entity="MedicalRecord" 
+            title="MEDICALRECORD"
+            keys="id"
+            columns="id;patient_id;record_date;diagnosis;treatment" 
+            header-actions="R;D"
+            visible-columns="id;patient_id;record_date;diagnosis;treatment"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="patient_id" title="patient_id">
+    <o-table-cell-renderer-service attr="patient_id" 
+        service="Patient" entity="PatientType" columns="id;first_name"
+        parent-keys="id:patient_id"
+        value-column="first_name" keys="patient_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #record_date attr="record_date" type="timestamp" label="record_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #diagnosis attr="diagnosis" title="diagnosis" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #treatment attr="treatment" title="treatment" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Patient",
+            "code": "class Patient(Base):\n    \"\"\"description: Table for storing patient information in the clinic.\"\"\"\n    __tablename__ = 'patient'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    dob = Column(Date, nullable=False)\n    gender = Column(String(1), nullable=False)\n    phone_number = Column(String, nullable=True)",
+            "description": "Table for storing patient information in the clinic.",
+            "name": "Patient"
+        },
+        {
+            "classname": "Doctor",
+            "code": "class Doctor(Base):\n    \"\"\"description: Table for storing doctor information in the clinic.\"\"\"\n    __tablename__ = 'doctor'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    specialization = Column(String, nullable=False)",
+            "description": "Table for storing doctor information in the clinic.",
+            "name": "Doctor"
+        },
+        {
+            "classname": "Appointment",
+            "code": "class Appointment(Base):\n    \"\"\"description: Table for storing appointment details including doctor and patient associations.\"\"\"\n    __tablename__ = 'appointment'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    patient_id = Column(Integer, ForeignKey('patient.id'), nullable=False)\n    doctor_id = Column(Integer, ForeignKey('doctor.id'), nullable=False)\n    appointment_date = Column(DateTime, nullable=False)\n    reason = Column(String, nullable=True)",
+            "description": "Table for storing appointment details including doctor and patient associations.",
+            "name": "Appointment"
+        },
+        {
+            "classname": "MedicalRecord",
+            "code": "class MedicalRecord(Base):\n    \"\"\"description: Table for storing medical records associated with a patient.\"\"\"\n    __tablename__ = 'medical_record'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    patient_id = Column(Integer, ForeignKey('patient.id'), nullable=False)\n    record_date = Column(DateTime, nullable=False)\n    diagnosis = Column(String, nullable=True)\n    treatment = Column(String, nullable=True)",
+            "description": "Table for storing medical records associated with a patient.",
+            "name": "MedicalRecord"
+        },
+        {
+            "classname": "Prescription",
+            "code": "class Prescription(Base):\n    \"\"\"description: Table for storing prescriptions linked to appointments.\"\"\"\n    __tablename__ = 'prescription'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    appointment_id = Column(Integer, ForeignKey('appointment.id'), nullable=False)\n    medication_name = Column(String, nullable=False)\n    dosage = Column(String, nullable=False)\n    start_date = Column(DateTime, nullable=False)\n    end_date = Column(DateTime, nullable=True)",
+            "description": "Table for storing prescriptions linked to appointments.",
+            "name": "Prescription"
+        },
+        {
+            "classname": "Invoice",
+            "code": "class Invoice(Base):\n    \"\"\"description: Table for storing invoice information related to appointments.\"\"\"\n    __tablename__ = 'invoice'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    appointment_id = Column(Integer, ForeignKey('appointment.id'), nullable=False)\n    total_amount = Column(Integer, nullable=False)\n    paid_amount = Column(Integer, nullable=False)\n    due_date = Column(DateTime, nullable=False)",
+            "description": "Table for storing invoice information related to appointments.",
+            "name": "Invoice"
+        },
+        {
+            "classname": "Payment",
+            "code": "class Payment(Base):\n    \"\"\"description: Table for recording payments for invoices.\"\"\"\n    __tablename__ = 'payment'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    invoice_id = Column(Integer, ForeignKey('invoice.id'), nullable=False)\n    payment_date = Column(DateTime, nullable=False)\n    amount = Column(Integer, nullable=False)\n    method = Column(String, nullable=False)",
+            "description": "Table for recording payments for invoices.",
+            "name": "Payment"
+        },
+        {
+            "classname": "ClinicStaff",
+            "code": "class ClinicStaff(Base):\n    \"\"\"description: Table for storing clinic staff information.\"\"\"\n    __tablename__ = 'clinic_staff'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    position = Column(String, nullable=False)",
+            "description": "Table for storing clinic staff information.",
+            "name": "ClinicStaff"
+        },
+        {
+            "classname": "Room",
+            "code": "class Room(Base):\n    \"\"\"description: Table for storing information about rooms available in the clinic.\"\"\"\n    __tablename__ = 'room'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    room_number = Column(String, nullable=False)\n    room_type = Column(String, nullable=False)",
+            "description": "Table for storing information about rooms available in the clinic.",
+            "name": "Room"
+        },
+        {
+            "classname": "Equipment",
+            "code": "class Equipment(Base):\n    \"\"\"description: Table for storing clinic equipment information.\"\"\"\n    __tablename__ = 'equipment'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    equipment_name = Column(String, nullable=False)\n    equipment_type = Column(String, nullable=False)\n    purchase_date = Column(DateTime, nullable=False)",
+            "description": "Table for storing clinic equipment information.",
+            "name": "Equipment"
+        },
+        {
+            "classname": "Inventory",
+            "code": "class Inventory(Base):\n    \"\"\"description: Table for managing inventory items in the clinic.\"\"\"\n    __tablename__ = 'inventory'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    item_name = Column(String, nullable=False)\n    quantity = Column(Integer, nullable=False)",
+            "description": "Table for managing inventory items in the clinic.",
+            "name": "Inventory"
+        },
+        {
+            "classname": "Supplier",
+            "code": "class Supplier(Base):\n    \"\"\"description: Table for storing supplier information associated with clinic consumables.\"\"\"\n    __tablename__ = 'supplier'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    supplier_name = Column(String, nullable=False)\n    contact_number = Column(String, nullable=True)\n    address = Column(String, nullable=True)",
+            "description": "Table for storing supplier information associated with clinic consumables.",
+            "name": "Supplier"
+        }
+    ],
+    "rules": [],
+    "test_data": "# Test Data for Patient\npatient1 = Patient(first_name='John', last_name='Doe', dob=date(1985, 1, 15), gender='M', phone_number='1234567890')\npatient2 = Patient(first_name='Jane', last_name='Smith', dob=date(1990, 5, 20), gender='F', phone_number='0987654321')\npatient3 = Patient(first_name='Jim', last_name='Bean', dob=date(1975, 7, 30), gender='M')\npatient4 = Patient(first_name='Julia', last_name='Roberts', dob=date(1995, 12, 10), gender='F', phone_number='5555555555')\n\n# Test Data for Doctor\ndoctor1 = Doctor(first_name='Alice', last_name='Johnson', specialization='Cardiology')\ndoctor2 = Doctor(first_name='Bob', last_name='Marley', specialization='Dentistry')\ndoctor3 = Doctor(first_name='Charlie', last_name='Brown', specialization='Dermatology')\ndoctor4 = Doctor(first_name='Dave', last_name='Matthews', specialization='Neurology')\n\n# Test Data for Appointment\nappointment1 = Appointment(patient_id=1, doctor_id=2, appointment_date=datetime(2023, 10, 20, 14, 30), reason='Regular Checkup')\nappointment2 = Appointment(patient_id=3, doctor_id=1, appointment_date=datetime(2023, 10, 21, 9, 0), reason='Follow-up')\nappointment3 = Appointment(patient_id=2, doctor_id=3, appointment_date=datetime(2023, 10, 22, 11, 15))\nappointment4 = Appointment(patient_id=4, doctor_id=4, appointment_date=datetime(2023, 10, 23, 15, 45), reason='Consultation')\n\n# Test Data for MedicalRecord\nmedical_record1 = MedicalRecord(patient_id=1, record_date=datetime(2023, 10, 20), diagnosis='Hypertension', treatment='Medication')\nmedical_record2 = MedicalRecord(patient_id=2, record_date=datetime(2023, 10, 21), diagnosis='Toothache', treatment='Root Canal')\nmedical_record3 = MedicalRecord(patient_id=3, record_date=datetime(2023, 10, 22), diagnosis='Acne', treatment='Topical Cream')\nmedical_record4 = MedicalRecord(patient_id=4, record_date=datetime(2023, 10, 23), diagnosis='Migraine', treatment='Pain Relief')\n\n# Test Data for Prescription\nprescription1 = Prescription(appointment_id=1, medication_name='Aspirin', dosage='100mg', start_date=datetime(2023, 10, 20), end_date=datetime(2023, 11, 20))\nprescription2 = Prescription(appointment_id=2, medication_name='Amoxicillin', dosage='250mg', start_date=datetime(2023, 10, 21))\nprescription3 = Prescription(appointment_id=3, medication_name='Ibuprofen', dosage='200mg', start_date=datetime(2023, 10, 22), end_date=datetime(2023, 12, 31))\nprescription4 = Prescription(appointment_id=4, medication_name='Paracetamol', dosage='500mg', start_date=datetime(2023, 10, 23))\n\n# Test Data for Invoice\ninvoice1 = Invoice(appointment_id=1, total_amount=150, paid_amount=100, due_date=datetime(2023, 11, 1))\ninvoice2 = Invoice(appointment_id=2, total_amount=200, paid_amount=200, due_date=datetime(2023, 11, 2))\ninvoice3 = Invoice(appointment_id=3, total_amount=350, paid_amount=250, due_date=datetime(2023, 11, 3))\ninvoice4 = Invoice(appointment_id=4, total_amount=120, paid_amount=120, due_date=datetime(2023, 11, 4))\n\n# Test Data for Payment\npayment1 = Payment(invoice_id=1, payment_date=datetime(2023, 10, 25), amount=50, method='Credit Card')\npayment2 = Payment(invoice_id=2, payment_date=datetime(2023, 10, 26), amount=200, method='Cash')\npayment3 = Payment(invoice_id=3, payment_date=datetime(2023, 10, 27), amount=100, method='Debit Card')\npayment4 = Payment(invoice_id=4, payment_date=datetime(2023, 10, 28), amount=120, method='Online')\n\n# Test Data for ClinicStaff\nstaff1 = ClinicStaff(first_name='Emily', last_name='Blunt', position='Receptionist')\nstaff2 = ClinicStaff(first_name='Matt', last_name='Damon', position='Nurse')\nstaff3 = ClinicStaff(first_name='Leonardo', last_name='DiCaprio', position='Technician')\nstaff4 = ClinicStaff(first_name='Scarlett', last_name='Johansson', position='Pharmacist')\n\n# Test Data for Room\nroom1 = Room(room_number='101', room_type='Consultation')\nroom2 = Room(room_number='102', room_type='Surgery')\nroom3 = Room(room_number='103', room_type='Recovery')\nroom4 = Room(room_number='104', room_type='ICU')\n\n# Test Data for Equipment\nequipment1 = Equipment(equipment_name='X-Ray Machine', equipment_type='Diagnostic', purchase_date=datetime(2020, 1, 1))\nequipment2 = Equipment(equipment_name='Ultrasound Machine', equipment_type='Diagnostic', purchase_date=datetime(2019, 6, 15))\nequipment3 = Equipment(equipment_name='ECG Monitor', equipment_type='Monitoring', purchase_date=datetime(2021, 8, 22))\nequipment4 = Equipment(equipment_name='Ventilator', equipment_type='Respiratory', purchase_date=datetime(2022, 3, 30))\n\n# Test Data for Inventory\ninventory1 = Inventory(item_name='Syringe', quantity=500)\ninventory2 = Inventory(item_name='Bandage', quantity=300)\ninventory3 = Inventory(item_name='Gloves', quantity=1000)\ninventory4 = Inventory(item_name='Mask', quantity=2000)\n\n# Test Data for Supplier\nsupplier1 = Supplier(supplier_name='MediSupplies', contact_number='0987654321', address='123 Health Street')\nsupplier2 = Supplier(supplier_name='HealthWare', contact_number='0123456789', address='456 Care Road')\nsupplier3 = Supplier(supplier_name='ClinicPlus', contact_number='1122334455', address='789 Clinic Ave')\nsupplier4 = Supplier(supplier_name='PharmaGoods', contact_number='6677889900', address='321 Cure Blvd')",
+    "name": "MedicalClinicSystem"
+}
